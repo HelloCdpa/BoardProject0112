@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>findAll</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <th>글번호</th>
+    <th>작성자</th>
+    <th>글비밀번호</th>
+    <th>제목</th>
+    <th>글내용</th>
+    <th>조회(ajax)</th>
+    <th>삭제(get)</th>
+    <th>삭제(delete)</th>
+    </thead>
+    <tbody>
+    <tr th:each="board:${boardList}">
+        <td th:text="${board.boardId}">글번호</td>
+        <td th:text="${board.boardWriter}">작성자</td>
+        <td th:text="${board.boardPassword}">글비밀번호</td>
+        <td><a th:text="${board.boardTitle}" th:href="@{|/board/${board.boardId}|}"></a></td>
+        <td th:text="${board.boardContents}">글내용</td>
+
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+
+
+</table>
+
+
+
+
+
+
+
+
+</body>
+</html>
