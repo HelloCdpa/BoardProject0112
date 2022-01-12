@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    const update = () => {
+        const boardId = document.getElementById('boardId').value;
+        const boardWriter = document.querySelector('#boardWriter').value;
+        const boardPassword = $('#boardPassword').val();
+        const boardTitle = $('#boardTitle').val();
+        const boardContents = $('#boardContents').val();
+
+        console.log(boardId,boardWriter,boardPassword,boardTitle,boardContents,boardDate);
+        const reqUrl = "/board/" +boardId;
+
+        const updateData = JSON.stringify({
+            boardId : boardId,
+            boardWriter : boardWriter,
+            boardPassword : boardPassword,
+            boardTitle : boardTitle,
+            boardContents : boardContents,
+
+            }
+        );
+        console.log(updateData);
+        $.ajax({
+            type : 'put',
+            contentType : "application/json",
+            data : updateData,
+            url : reqUrl,
+            success : function (){
+                location.href = "/board/"+boardId;
+            },error : function (){
+                alert("요청실패")
+            }
+        })
+            };
+
+</script>
+
+
+
+<body>
+<form action="/board/update" method="post" th:object="${board}">
+    <input type="hidden" th:field="*{boardId}">
+   작성자 : <input type="text" th:field="*{boardWriter}" readonly>
+    비번 : <input type="text" th:field="*{boardPassword}" readonly>
+    제목 : <input type="text" th:field="*{boardTitle}" placeholder="수정제목">
+    내용 : <input type="text" th:field="*{boardContents}" placeholder="수정내용">
+    작성 시간 : <input type="text" th:field="*{boardDate}" readonly>
+
+<input type="submit" value="글수정 (post)">
+<button type="button" th:onclick="update()" >글수정 (put)</button>
+</form>
+
+
+
+
+</body>
+</html>

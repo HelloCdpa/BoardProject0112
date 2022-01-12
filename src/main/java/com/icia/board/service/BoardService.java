@@ -11,4 +11,8 @@ public interface BoardService {
     List<BoardDetailDTO> findALl();
 
     BoardDetailDTO findById(Long boardId);
+
+    void deleteById(Long boardId);
+
+    Long update(BoardDetailDTO boardDetailDTO);
 }

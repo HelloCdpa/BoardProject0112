@@ -6,23 +6,17 @@
 </head>
 <body>
 
-<!--작성자, 비밀번호, 제목, 내용 boardWriter
-    3. boardPassword
-    4. boardTitle
-    5. boardContents-->
-<form action="/board/save" method="post" >
-    작성자 : <input type="text" name="boardWriter"  placeholder="작성자">
-    비밀번호 : <input type="password" name="boardPassword"  placeholder="비밀번호">
-    제목 : <input type="text" name="boardTitle"  placeholder="제목">
-    내용 : <textarea name="boardContents" placeholder="내용" width="50"></textarea>
-    <input type="submit" value="글작성">
-
-
-
-
-
-
-
+<!--작성자, 비밀번호, 제목, 내용
+    boardWriter
+    boardPassword
+    boardTitle
+    boardContents-->
+    <form action="/board/save" method="post" >
+        작성자 : <input type="text" name="boardWriter"  placeholder="작성자">
+        비밀번호 : <input type="password" name="boardPassword"  placeholder="비밀번호">
+        제목 : <input type="text" name="boardTitle"  placeholder="제목">
+        내용 : <textarea name="boardContents" placeholder="내용" width="50"></textarea>
+        <input type="submit" value="글작성">
 
 </form>
 

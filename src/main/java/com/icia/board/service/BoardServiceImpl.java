@@ -18,7 +18,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public long save(BoardSaveDTO boardSaveDTO) {
-        BoardEntity boardEntity = BoardEntity.saveBoard(boardSaveDTO);
+        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardSaveDTO);
 
         return br.save(boardEntity).getId();
     }
@@ -35,9 +35,29 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public BoardDetailDTO findById(Long boardId) {
+        //널이든 아니든 Optional 로 일단 감쌌다
+        //널이 아니라면 값을 꺼내오고 널이면 다르게 처리하려고
+        //프로그램이 중단되는 것을 막기위해서
         Optional<BoardEntity> optionalBoardEntity = br.findById(boardId);
-        BoardEntity boardEntity = optionalBoardEntity.get();
-        BoardDetailDTO board = BoardDetailDTO.toBoardDetail(boardEntity);
+        BoardDetailDTO board = null;
+        if(optionalBoardEntity.isPresent()){
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            board = BoardDetailDTO.toBoardDetail(boardEntity);
+        }
+
+
         return board;
+    }
+
+    @Override
+    public void deleteById(Long boardId) {
+         br.deleteById(boardId);
+    }
+
+    @Override
+    public Long update(BoardDetailDTO boardDetailDTO) {
+        BoardEntity save = br.save(BoardEntity.toUpdateEntity(boardDetailDTO));
+        Long boardId = save.getId();
+        return boardId;
     }
 }
