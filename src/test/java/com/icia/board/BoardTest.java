@@ -3,6 +3,7 @@ package com.icia.board;
 
 import com.icia.board.dto.BoardDetailDTO;
 import com.icia.board.dto.BoardSaveDTO;
+import com.icia.board.dto.BoardUpdateDTO;
 import com.icia.board.service.BoardService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -114,13 +115,15 @@ public class BoardTest {
 
         BoardSaveDTO boardSaveDTO = new BoardSaveDTO(writer, password, title, content);
         long boardId = bs.save(boardSaveDTO);
-        BoardDetailDTO board = bs.findById(boardId);
+        BoardDetailDTO saveDTO = bs.findById(boardId);
 
-        board.setBoardTitle(updateTitle);
-        board.setBoardContents(updateContent);
-        bs.update(board);
+        BoardUpdateDTO boardUpdateDTO = new BoardUpdateDTO(boardId,writer,password,updateTitle,updateContent);
 
-        assertThat(boardSaveDTO.getBoardTitle()).isNotEqualTo(board.getBoardTitle());
+        long updateId = bs.update(boardUpdateDTO);
+        BoardDetailDTO updateDTO = bs.findById(updateId);
+
+
+        assertThat(saveDTO.getBoardTitle()).isNotEqualTo(updateDTO.getBoardTitle());
 
     }
 

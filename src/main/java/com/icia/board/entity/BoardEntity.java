@@ -1,18 +1,18 @@
 package com.icia.board.entity;
 
-import com.icia.board.dto.BoardDetailDTO;
 import com.icia.board.dto.BoardSaveDTO;
+import com.icia.board.dto.BoardUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "board_table")
-public class BoardEntity {
+
+public class BoardEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
@@ -26,8 +26,8 @@ public class BoardEntity {
     private String boardTitle;
     @Column(length = 1000)
     private String boardContents;
-    @Column
-    private LocalDateTime boardDate;
+//    @Column
+//    private LocalDateTime boardDate;
 
     //entity 로
     public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO) {
@@ -36,19 +36,19 @@ public class BoardEntity {
         board.setBoardTitle(boardSaveDTO.getBoardTitle());
         board.setBoardContents(boardSaveDTO.getBoardContents());
         board.setBoardPassword(boardSaveDTO.getBoardPassword());
-        board.setBoardDate(LocalDateTime.now());
+//        board.setBoardDate(LocalDateTime.now());
 
         return board;
     }
 
-        public static BoardEntity toUpdateEntity(BoardDetailDTO boardDetailDTO){
+        public static BoardEntity toUpdateEntity(BoardUpdateDTO boardUpdateDTO){
             BoardEntity board = new BoardEntity();
-            board.setId(boardDetailDTO.getBoardId());
-            board.setBoardWriter(boardDetailDTO.getBoardWriter());
-            board.setBoardTitle(boardDetailDTO.getBoardTitle());
-            board.setBoardContents(boardDetailDTO.getBoardContents());
-            board.setBoardPassword(boardDetailDTO.getBoardPassword());
-            board.setBoardDate(LocalDateTime.now());
+            board.setId(boardUpdateDTO.getBoardId());
+            board.setBoardWriter(boardUpdateDTO.getBoardWriter());
+            board.setBoardTitle(boardUpdateDTO.getBoardTitle());
+            board.setBoardContents(boardUpdateDTO.getBoardContents());
+            board.setBoardPassword(boardUpdateDTO.getBoardPassword());
+//            board.setBoardDate(LocalDateTime.now());
 
             return board;
 

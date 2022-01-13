@@ -16,7 +16,8 @@ public class BoardDetailDTO {
     private String boardPassword;
     private String boardTitle;
     private String boardContents;
-    private LocalDateTime boardDate;
+    private LocalDateTime CreateBoardDate;
+    private LocalDateTime UpdateBoardDate;
 
 
     //detailDTO 로
@@ -28,7 +29,8 @@ public class BoardDetailDTO {
         board.setBoardTitle(boardEntity.getBoardTitle());
         board.setBoardContents(boardEntity.getBoardContents());
         board.setBoardPassword(boardEntity.getBoardPassword());
-        board.setBoardDate(boardEntity.getBoardDate());
+        board.setCreateBoardDate(boardEntity.getCreateTime());
+        board.setUpdateBoardDate(boardEntity.getUpdateTime());
 
         return board;
 

@@ -81,6 +81,7 @@
     <th>제목</th>
     <th>글내용</th>
     <th>작성시간</th>
+    <th>수정시간</th>
     <th>삭제(get)</th>
     <th>삭제(delete)</th>
     <th>글수정</th>
@@ -93,7 +94,8 @@
         <td th:text="${board.boardPassword}">글비밀번호</td>
         <td><a th:text="${board.boardTitle}" th:href="@{|/board/${board.boardId}|}"></a></td>
         <td th:text="${board.boardContents}">글내용</td>
-        <td th:text="${board.boardDate}">글작성시간</td>
+        <td th:text="${board.createBoardDate}">글작성시간</td>
+        <td th:text="${board.updateBoardDate}">수정 시간</td>
 
         <td><a th:href="@{|/board/delete/${board.boardId}|}">글삭제</a></td>
         <td><button type="button" th:onclick="deleteById([[${board.boardId}]])">글삭제(post)</button></td>

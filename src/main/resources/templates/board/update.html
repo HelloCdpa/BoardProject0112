@@ -54,13 +54,20 @@
 <form name="update_form" action="/board/update" method="post" th:object="${board}">
     <input type="hidden" th:field="*{boardId}">
     작성자 : <input type="text" th:field="*{boardWriter}" readonly>
+
+
     비번 확인 : <input type="text" th:field="*{boardPassword}" placeholder="비밀번호를 입력하세요">
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}">글로벌오류</p>
+    </div>
+    <p th:if="${#fields.hasErrors('boardPassword')}" th:errors="*{boardPassword}" th:errorclass="field-error"></p>
     제목 : <input type="text" th:field="*{boardTitle}" placeholder="수정제목">
     내용 : <input type="text" th:field="*{boardContents}" placeholder="수정내용">
     작성 시간 : <input type="text" th:value="${board.boardDate}" th:field="*{boardDate}" readonly>
 
-    <button type="button" th:onclick="passwordCheck()">글수정(post)</button>
-    <button type="button" th:onclick="update()" >글수정 (put)</button>
+    <input type="button" th:onclick="passwordCheck()" value="글수정 (post)">
+
+    <input type="button" th:onclick="update()" value="글수정 (put)">
 </form>
 <script>
     function passwordCheck(){
