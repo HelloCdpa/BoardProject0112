@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>update</title>
+    <title>업데이트</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -13,9 +13,10 @@
         const boardPassword = $('#boardPassword').val();
         const boardTitle = $('#boardTitle').val();
         const boardContents = $('#boardContents').val();
-
+        const boardDate = document.getElementById('boardDate').value;
         console.log(boardId,boardWriter,boardPassword,boardTitle,boardContents,boardDate);
         const reqUrl = "/board/" +boardId;
+
 
         const updateData = JSON.stringify({
             boardId : boardId,
@@ -23,10 +24,12 @@
             boardPassword : boardPassword,
             boardTitle : boardTitle,
             boardContents : boardContents,
-
+            // boardDate : boardDate
             }
         );
         console.log(updateData);
+        const pwDB = "[[${board.boardPassword}]]";
+        if(pwDB == boardPassword){
         $.ajax({
             type : 'put',
             contentType : "application/json",
@@ -37,7 +40,10 @@
             },error : function (){
                 alert("요청실패")
             }
-        })
+        })}
+        else {
+            alert('비밀번호가 틀렸습니다.');
+        }
             };
 
 </script>
@@ -45,18 +51,31 @@
 
 
 <body>
-<form action="/board/update" method="post" th:object="${board}">
+<form name="update_form" action="/board/update" method="post" th:object="${board}">
     <input type="hidden" th:field="*{boardId}">
-   작성자 : <input type="text" th:field="*{boardWriter}" readonly>
-    비번 : <input type="text" th:field="*{boardPassword}" readonly>
+    작성자 : <input type="text" th:field="*{boardWriter}" readonly>
+    비번 확인 : <input type="text" th:field="*{boardPassword}" placeholder="비밀번호를 입력하세요">
     제목 : <input type="text" th:field="*{boardTitle}" placeholder="수정제목">
     내용 : <input type="text" th:field="*{boardContents}" placeholder="수정내용">
-    작성 시간 : <input type="text" th:field="*{boardDate}" readonly>
+    작성 시간 : <input type="text" th:value="${board.boardDate}" th:field="*{boardDate}" readonly>
 
-<input type="submit" value="글수정 (post)">
-<button type="button" th:onclick="update()" >글수정 (put)</button>
+    <button type="button" th:onclick="passwordCheck()">글수정(post)</button>
+    <button type="button" th:onclick="update()" >글수정 (put)</button>
 </form>
+<script>
+    function passwordCheck(){
+        const boardPassword = $('#boardPassword').val();
+        const pwDB = "[[${board.boardPassword}]]";
+        console.log(pwDB);
+        if(boardPassword==pwDB) {
+            //이 문장이 아래 form을 전송하는 문장
+            document.update_form.submit();
+        }else{
+            alert('비밀번호가 틀립니다.');
+        }
+    }
 
+</script>
 
 
 

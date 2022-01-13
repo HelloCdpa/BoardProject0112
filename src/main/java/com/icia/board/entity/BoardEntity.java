@@ -48,7 +48,7 @@ public class BoardEntity {
             board.setBoardTitle(boardDetailDTO.getBoardTitle());
             board.setBoardContents(boardDetailDTO.getBoardContents());
             board.setBoardPassword(boardDetailDTO.getBoardPassword());
-            board.setBoardDate(boardDetailDTO.getBoardDate());
+            board.setBoardDate(LocalDateTime.now());
 
             return board;
 

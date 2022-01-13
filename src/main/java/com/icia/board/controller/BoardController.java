@@ -50,11 +50,11 @@ public class BoardController {
     }
 
     @PostMapping ("/{boardId}")
-    public @ResponseBody BoardDetailDTO findById2(@PathVariable Long boardId){
+    public ResponseEntity findById2(@PathVariable Long boardId){
         log.info("글보기 메서드 호출. 요청 글번호 : {}", boardId);
         BoardDetailDTO board = bs.findById(boardId);
 
-        return board;
+        return new ResponseEntity<BoardDetailDTO>(board,HttpStatus.OK);
     }
 
 
@@ -77,6 +77,8 @@ public class BoardController {
     }
     @PostMapping("/update")
     public String update1(@ModelAttribute BoardDetailDTO boardDetailDTO){
+
+
         bs.update(boardDetailDTO);
 
         return "redirect:/board/";
@@ -86,6 +88,7 @@ public class BoardController {
     public ResponseEntity update2(@RequestBody BoardDetailDTO boardDetailDTO){
         Long Id = bs.update(boardDetailDTO);
         return new ResponseEntity(HttpStatus.OK);
+
     }
 
 

@@ -114,12 +114,20 @@ public class BoardTest {
 
         BoardSaveDTO boardSaveDTO = new BoardSaveDTO(writer, password, title, content);
         long boardId = bs.save(boardSaveDTO);
+        BoardDetailDTO board = bs.findById(boardId);
 
-        bs.deleteById(boardId);
-        assertThrows(NoSuchElementException.class, () -> {
-            assertThat(bs.findById(boardId)).isNull();
-        });
+        board.setBoardTitle(updateTitle);
+        board.setBoardContents(updateContent);
+        bs.update(board);
+
+        assertThat(boardSaveDTO.getBoardTitle()).isNotEqualTo(board.getBoardTitle());
+
     }
+
+
+
+
+
 
 
 
