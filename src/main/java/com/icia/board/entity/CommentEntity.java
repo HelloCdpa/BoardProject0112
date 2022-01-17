@@ -23,6 +23,11 @@ public class CommentEntity extends BaseEntity {
     @JoinColumn(name = "board_id") //부모테이블(참조하고자 하는 테이블)의 pk 컬럼이름
     private BoardEntity boardEntity;  //참조하고자 하는 테이블을 관리하는 엔티티
 
+    //작성자
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
     @Column
     private String commentWriter;
 
@@ -30,12 +35,17 @@ public class CommentEntity extends BaseEntity {
     private String commentContents;
 
 
-    public static CommentEntity toSaveEntity(CommentSaveDTO commentSaveDTO, BoardEntity boardEntity) {
+    public static CommentEntity toSaveEntity(CommentSaveDTO commentSaveDTO, BoardEntity boardEntity, MemberEntity memberEntity) {
         CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setMemberEntity(memberEntity);
         commentEntity.setCommentWriter(commentSaveDTO.getCommentWriter());
         commentEntity.setCommentContents(commentSaveDTO.getCommentContents());
         commentEntity.setBoardEntity(boardEntity);
         return commentEntity;
 
     }
+
+
+
+
 }

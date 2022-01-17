@@ -1,10 +1,12 @@
 package com.icia.board.controller;
 
+import com.icia.board.dto.BoardDetailDTO;
 import com.icia.board.dto.CommentDetailDTO;
 import com.icia.board.dto.CommentSaveDTO;
 import com.icia.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +21,11 @@ public class CommentController {
     private final CommentService cs;
 
     @PostMapping("/save")
-    public @ResponseBody List<CommentDetailDTO> save (@ModelAttribute CommentSaveDTO commentSaveDTO){
+    public @ResponseBody List<CommentDetailDTO> save (@ModelAttribute CommentSaveDTO commentSaveDTO, Model model){
+        Long commentId = cs.save(commentSaveDTO);
+        List<CommentDetailDTO> commentList = cs.findAll(commentSaveDTO.getBoardId());
+        model.addAttribute("commentList",commentList);
 
-
-        return null;
+        return commentList;
     }
 }

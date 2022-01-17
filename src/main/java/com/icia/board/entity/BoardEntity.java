@@ -31,13 +31,24 @@ public class BoardEntity extends BaseEntity{
 //    @Column
 //    private LocalDateTime boardDate;
     //댓글 연관관계
-    @OneToMany(mappedBy = "boardEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
+
+
+
+
+
 
 
     //entity 로
-    public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO) {
+    public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO,MemberEntity memberEntity) {
         BoardEntity board = new BoardEntity();
+        board.setMemberEntity(memberEntity);
         board.setBoardWriter(boardSaveDTO.getBoardWriter());
         board.setBoardTitle(boardSaveDTO.getBoardTitle());
         board.setBoardContents(boardSaveDTO.getBoardContents());
