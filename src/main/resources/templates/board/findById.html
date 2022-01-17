@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>상세조회</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
 <body>
-<form>
+
     <input type="hidden" th:value="*{boardId}">
     <p th:text="${board.boardPassword}"></p>
     <p th:text="${board.boardTitle}"></p>
@@ -13,7 +14,53 @@
     <p th:text="${board.createBoardDate}"></p>
     <p th:text="${board.updateBoardDate}"></p>
 
+    <div id="comment-write">
+        <input type="text" id="commentWriter" placeholder="작성자"><br>
+        <input type="text" id="commentContents" placeholder="내용"><br>
+        <button id="comment-write-btn">댓글등록</button>
+    </div>
+<div id="comment-area">
+    <table>
+        <thead>
+        <th>댓글번호</th>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>작성시간</th>
+        </thead>
+        <tbody>
 
-</form>
+        </tbody>
+
+
+
+
+    </table>
+</div>
 </body>
+<script>
+    $("comment-write-btn").click(function (){
+        console.log("댓글작성클릭")
+        const commentWriter = $("#commentWriter").val();
+        const commentContents = $("commentContents") .val();
+        const boardId = '[[${board.boardId}]]';
+        $.ajax({
+            type:'post',
+            url:'/comment/save',
+            data:{
+                'commentWriter' : commentWriter,
+                'commentContents': commentContents,
+                'boardId':boardId
+            },
+            dataType : 'json',
+            success: function (result){
+                console.log(result);
+            },
+            error:function (){
+                alert('ajax 실패');
+            }
+        });
+    });
+
+
+</script>
 </html>

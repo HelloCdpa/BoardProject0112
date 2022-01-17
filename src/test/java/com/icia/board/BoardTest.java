@@ -2,13 +2,11 @@ package com.icia.board;
 
 
 import com.icia.board.common.PagingConst;
-import com.icia.board.dto.BoardDetailDTO;
-import com.icia.board.dto.BoardPagingDTO;
-import com.icia.board.dto.BoardSaveDTO;
-import com.icia.board.dto.BoardUpdateDTO;
+import com.icia.board.dto.*;
 import com.icia.board.entity.BoardEntity;
 import com.icia.board.repository.BoardRepository;
 import com.icia.board.service.BoardService;
+import com.icia.board.service.CommentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
@@ -33,6 +32,8 @@ public class BoardTest {
     private BoardService bs;
     @Autowired
     private BoardRepository br;
+    @Autowired
+    private CommentService cs;
 
     @Test
     @Transactional
@@ -187,6 +188,38 @@ public class BoardTest {
 
 
     }
+
+    @Test
+    @Transactional
+    @Commit
+    @DisplayName("댓글작성 테스트")
+    public void commentSaveTest(){
+        String writer = "작성자1";
+        String password = "비밀번호1";
+        String title = "제목1";
+        String content = "내용1";
+        BoardSaveDTO boardSaveDTO = new BoardSaveDTO(writer,password,title,content);
+        long c_boardId = bs.save(boardSaveDTO);
+
+        String c_writer = "댓글작성자";
+        String c_contents = "댓글내용";
+
+        CommentSaveDTO commentSaveDTO = new CommentSaveDTO(c_boardId,c_writer,c_contents);
+        Long c_id = cs.save(commentSaveDTO);
+
+        System.out.println(c_id);
+
+
+
+
+
+    }
+
+
+
+
+
+
 
 
 

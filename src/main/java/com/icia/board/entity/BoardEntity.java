@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +30,10 @@ public class BoardEntity extends BaseEntity{
     private String boardContents;
 //    @Column
 //    private LocalDateTime boardDate;
+    //댓글 연관관계
+    @OneToMany(mappedBy = "boardEntity", fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
 
     //entity 로
     public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO) {
