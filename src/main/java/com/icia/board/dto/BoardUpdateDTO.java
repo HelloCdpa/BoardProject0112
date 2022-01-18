@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class BoardUpdateDTO {
+    private Long memberId;
     private Long boardId;
     private String boardWriter;
     private String boardPassword;

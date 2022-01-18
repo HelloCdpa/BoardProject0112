@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class BoardEntity extends BaseEntity{
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
+    //회원 엔티티와의 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
@@ -49,7 +51,8 @@ public class BoardEntity extends BaseEntity{
     public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO,MemberEntity memberEntity) {
         BoardEntity board = new BoardEntity();
         board.setMemberEntity(memberEntity);
-        board.setBoardWriter(boardSaveDTO.getBoardWriter());
+        board.setBoardWriter(memberEntity.getMemberEmail());
+//        board.setBoardWriter(boardSaveDTO.getBoardWriter());
         board.setBoardTitle(boardSaveDTO.getBoardTitle());
         board.setBoardContents(boardSaveDTO.getBoardContents());
         board.setBoardPassword(boardSaveDTO.getBoardPassword());
@@ -58,10 +61,11 @@ public class BoardEntity extends BaseEntity{
         return board;
     }
 
-        public static BoardEntity toUpdateEntity(BoardUpdateDTO boardUpdateDTO){
+        public static BoardEntity toUpdateEntity(BoardUpdateDTO boardUpdateDTO, MemberEntity memberEntity){
             BoardEntity board = new BoardEntity();
+            board.setMemberEntity(memberEntity);
             board.setId(boardUpdateDTO.getBoardId());
-            board.setBoardWriter(boardUpdateDTO.getBoardWriter());
+            board.setBoardWriter(memberEntity.getMemberEmail());
             board.setBoardTitle(boardUpdateDTO.getBoardTitle());
             board.setBoardContents(boardUpdateDTO.getBoardContents());
             board.setBoardPassword(boardUpdateDTO.getBoardPassword());

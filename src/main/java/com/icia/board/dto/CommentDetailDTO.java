@@ -4,7 +4,6 @@ import com.icia.board.entity.CommentEntity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 public class CommentDetailDTO {
